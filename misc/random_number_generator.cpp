@@ -50,6 +50,10 @@ public:
 
     size_t count(0);
 
+    //Twelve point grid with each point having one of four colors.
+    //For test purposes we mandate selection of 8 unique points with random colors.
+    //The unselected four pointes remaining are later added sequentially.  
+
     // (8 + 2) x 8 = 80 bits
     while(seen.size() < 8)
       {
@@ -97,7 +101,7 @@ public:
 	  }
       }
 
-    // (8 + 2) x 2 = 20 bits   
+    // (8 + 2) x 4 = 40 bits   
     for(size_t num = 97; num <= 108; ++num)
       {
 	if(seen.find(num) == seen.end())
