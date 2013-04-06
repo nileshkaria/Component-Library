@@ -1,3 +1,6 @@
+#ifndef __KMP_STRING_MATCHER_H_GUARD_
+#define __KMP_STRING_MATCHER_H_GUARD_
+
 #include <vector>
 
 namespace KMP
@@ -24,3 +27,5 @@ namespace KMP
   };
 
 } // end namespace KMPStringMatcher
+
+#endif
