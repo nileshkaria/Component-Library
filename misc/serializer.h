@@ -1,3 +1,6 @@
+#ifndef __SERIALIZER_H_GUARD_
+#define __SERIALIZER_H_GUARD_
+
 #include <cstring>
 #include <map>
 #include <string>
@@ -848,3 +851,5 @@ namespace Deserialization
   Deserializer * DeserializerFactory::_pDeserializer = 0;
 
 } // end namespace Deserialization 
+
+#endif
