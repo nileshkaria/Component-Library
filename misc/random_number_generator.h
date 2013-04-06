@@ -1,3 +1,6 @@
+#ifndef __RANDOM_NUMBER_GENERATOR_H_GUARD_
+#define __RANDOM_NUMBER_GENERATOR_H_GUARD_
+
 #include <chrono>
 #include <random>
 
@@ -27,3 +30,5 @@ namespace RNG
   };
 
 } // end namespace RNG
+
+#endif
