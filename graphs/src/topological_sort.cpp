@@ -14,7 +14,7 @@ namespace Graph
         _marked          (rG.vertices(), false),
         _reversePost     ()
     {
-        for(size_t v = 0; v < rG.vertices(); ++v)
+        for(int v = 0; v < rG.vertices(); ++v)
             dfs(rG, v);
     }
 

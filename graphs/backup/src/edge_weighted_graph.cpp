@@ -1,4 +1,4 @@
-#include <graph.h>
+#include <edge_weighted_graph.h>
 
 #include <algorithm>
 
@@ -8,55 +8,50 @@ namespace Graph
 {
     //==========================================================================
     //--------------------------------------------------------------------------
-    Graph::Graph(int v) :
-        _vertices   (v),
-        _edges      (0),
-        _adjList    (v, new set<int>())
+    EdgeWeightedGraph::EdgeWeightedGraph(int v) :
+        _vertices        (v),
+        _edges           (0),
+        _adjList         (v, new set<Edge>())
     {}
 
     //--------------------------------------------------------------------------
-    Graph::~Graph()
+    EdgeWeightedGraph::~EdgeWeightedGraph()
     {
-        for_each(_adjList.begin(), _adjList.end(), delete_element<set<int> *>());
+        for_each(_adjList.begin(), _adjList.end(), delete_element<set<Edge> *>());
     }
 
     //--------------------------------------------------------------------------
-    void Graph::addEdge(int v, int w)
+    void EdgeWeightedGraph::addEdge(const Edge &e)
     { 
-        _adjList[v]->insert(w);
-        _adjList[w]->insert(v);
+        int v = e.either(), w = e.other(v);
+        
+        _adjList[v]->insert(e);
+        _adjList[w]->insert(e);
 
-        ++_edges;    
+        ++_edges;
     }
-
+aaa
     //--------------------------------------------------------------------------
-    const IGraph::container_t & Graph::adjacent(int v) const
+    const IGraph::container_t & EdgeWeightedGraph::adjacent(int v) const
     { 
         return *_adjList[v];
     }
 
     //--------------------------------------------------------------------------
-    int Graph::vertices() const
+    int EdgeWeightedGraph::vertices() const
     { 
         return _vertices;        
     }
 
     //--------------------------------------------------------------------------
-    int Graph::edges() const
+    int EdgeWeightedGraph::edges() const
     { 
         return _edges;
     }
 
     //--------------------------------------------------------------------------
-    const IGraph & Graph::reverse() const
+    std::string EdgeWeightedGraph::toString()
     { 
-        return *this;        
-    }
-
-    //--------------------------------------------------------------------------
-    std::string Graph::toString()
-    { 
-        return "";
     }
 
 }

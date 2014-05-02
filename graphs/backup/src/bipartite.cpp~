@@ -1,4 +1,4 @@
-#include <connected_components.h>
+#include <dfs.h>
 
 #include <limits>
 
@@ -8,52 +8,58 @@ namespace Graph
 {
     //==========================================================================
     //--------------------------------------------------------------------------
-    ConnectedComponents::ConnectedComponents(const IGraph &rG, int s) :
-        _count     (0),
-        _marked    (rG.vertices(), false),
-        _id        (rG.vertices(), numeric_limits<int>::max())
+    DepthFirstPaths::DepthFirstPaths(const IGraph &rG, int s) :
+        _s(s),
+        _marked(rG.vertices(), false),
+        _edgeTo(rG.vertices(), numeric_limits<int>::max())
     {
-        for(int v = 0; v < rG.vertices(); ++v)
-        {
-            if(!_marked[v])
-            {
-                dfs(rG, v);
-                ++_count;
-            }
-        }        
+        dfs(rG, s);
     }
 
     //--------------------------------------------------------------------------
-    ConnectedComponents::~ConnectedComponents()
+    DepthFirstPaths::~DepthFirstPaths()
     {}
 
     //--------------------------------------------------------------------------
-    void ConnectedComponents::dfs(const IGraph &rG, int v)
+    void DepthFirstPaths::dfs(const IGraph &rG, int v)
     {
         _marked[v] = true;
-        _id[v]     = _count;
         
         const IGraph::container_t & rAdjList = rG.adjacent(v);
         
         for(IGraph::const_iterator it = rAdjList.begin(); it != rAdjList.end(); ++it)
         {
             if(!_marked[*it])
+            {
                 dfs(rG, *it);
+                _edgeTo[*it] = v;
+            }            
         }
         
     }
 
     //--------------------------------------------------------------------------
-    int ConnectedComponents::count() const
-    {
-        return _count;
+    bool DepthFirstPaths::hasPathTo(int v)
+    { 
+        return _marked[v];
     }
-    
 
     //--------------------------------------------------------------------------
-    int ConnectedComponents::id(int v) const
+    void DepthFirstPaths::pathTo(stack<int> &rPath, int v)
     {
-        return _id[v];
+        if(!_marked[v])
+            return;
+        
+        for(int x = v; x != _s; x = _edgeTo[x])
+            rPath.push(x);
+        
+        rPath.push(_s);        
     }
 
+    //--------------------------------------------------------------------------
+    bool DepthFirstSearch::isBipartite(const IGraph &rG, int s)
+    {
+        
+    }
+    
 }

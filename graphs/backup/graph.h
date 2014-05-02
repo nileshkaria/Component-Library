@@ -1,5 +1,5 @@
-#ifndef __DIGRAPH_H__
-#define __DIGRAPH_H__
+#ifndef __GRAPH_H__
+#define __GRAPH_H__
 
 #include <igraph.h>
 
@@ -8,27 +8,25 @@
 namespace Graph
 {
   //============================================================================
-  class Digraph : public virtual IGraph
+  class Graph : public virtual IGraph
   {
   private:
     //--------------------------------------------------------------------------
-    int                            _vertices;
-    int                            _edges;
+    int                             _vertices;
+    int                             _edges;
 
-    std::vector<container_t *>     _adjList;
-    
-    Digraph                       *_pReverseGraph;
+    std::vector<std::set<int> *>    _adjList;
 
     //--------------------------------------------------------------------------
-    Digraph(const Digraph &);
-    Digraph & operator=(const Digraph &);
+    Graph(const Graph &);
+    Graph & operator=(const Graph &);
 
   public:
     //--------------------------------------------------------------------------
-    Digraph(int v = 0);
+    Graph(int v = 0);
 
     //--------------------------------------------------------------------------
-    virtual ~Digraph();
+    virtual ~Graph();
 
     //--------------------------------------------------------------------------
     virtual void addEdge(int v, int w);

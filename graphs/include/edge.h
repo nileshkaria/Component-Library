@@ -1,52 +1,44 @@
-#ifndef __DIGRAPH_H__
-#define __DIGRAPH_H__
+#ifndef __EDGE_H__
+#define __EDGE_H__
 
-#include <igraph.h>
-
-#include <vector>
+#include <set>
+#include <string>
 
 namespace Graph
 {
   //============================================================================
-  class Digraph : public virtual IGraph
+  class Edge
   {
   private:
     //--------------------------------------------------------------------------
-    int                            _vertices;
-    int                            _edges;
-
-    std::vector<container_t *>     _adjList;
-    
-    Digraph                       *_pReverseGraph;
-
-    //--------------------------------------------------------------------------
-    Digraph(const Digraph &);
-    Digraph & operator=(const Digraph &);
+    int       _v;
+    int       _w;
+    double    _weight;
 
   public:
     //--------------------------------------------------------------------------
-    Digraph(int v = 0);
+    Edge(int v = 0, int w = 0, double weight = 0.0);
 
     //--------------------------------------------------------------------------
-    virtual ~Digraph();
+    ~Edge();
 
     //--------------------------------------------------------------------------
-    virtual void addEdge(int v, int w);
+    int either() const;
 
     //--------------------------------------------------------------------------
-    virtual const container_t & adjacent(int v) const;
+    int other(int v) const;
 
     //--------------------------------------------------------------------------
-    virtual int vertices() const;
+    double weight();
 
     //--------------------------------------------------------------------------
-    virtual int edges() const;
+    bool operator<(const Edge &rhs) const;
 
     //--------------------------------------------------------------------------
-    virtual const IGraph & reverse() const;
+    bool operator>(const Edge &rhs) const;
 
     //--------------------------------------------------------------------------
-    virtual std::string toString();
+    std::string toString();
   };
 
 }

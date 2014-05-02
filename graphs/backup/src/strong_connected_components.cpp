@@ -1,4 +1,5 @@
-#include <connected_components.h>
+#include <strong_connected_components.h>
+#include <topological_sort.h>
 
 #include <limits>
 
@@ -8,13 +9,21 @@ namespace Graph
 {
     //==========================================================================
     //--------------------------------------------------------------------------
-    ConnectedComponents::ConnectedComponents(const IGraph &rG, int s) :
+    StrongConnectedComponents::StrongConnectedComponents(const IGraph &rG, int s) :
         _count     (0),
         _marked    (rG.vertices(), false),
         _id        (rG.vertices(), numeric_limits<int>::max())
     {
-        for(int v = 0; v < rG.vertices(); ++v)
+        TopologicalSort ts(rG.reverse());
+        
+        stack<int> path;
+        ts.pathTo(path);
+        
+        while(!path.empty())
         {
+            int v = path.top();
+            path.pop();
+            
             if(!_marked[v])
             {
                 dfs(rG, v);
@@ -24,11 +33,11 @@ namespace Graph
     }
 
     //--------------------------------------------------------------------------
-    ConnectedComponents::~ConnectedComponents()
+    StrongConnectedComponents::~StrongConnectedComponents()
     {}
 
     //--------------------------------------------------------------------------
-    void ConnectedComponents::dfs(const IGraph &rG, int v)
+    void StrongConnectedComponents::dfs(const IGraph &rG, int v)
     {
         _marked[v] = true;
         _id[v]     = _count;
@@ -44,14 +53,14 @@ namespace Graph
     }
 
     //--------------------------------------------------------------------------
-    int ConnectedComponents::count() const
+    int StrongConnectedComponents::count() const
     {
         return _count;
     }
     
 
     //--------------------------------------------------------------------------
-    int ConnectedComponents::id(int v) const
+    int StrongConnectedComponents::id(int v) const
     {
         return _id[v];
     }

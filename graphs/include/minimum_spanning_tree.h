@@ -1,52 +1,54 @@
-#ifndef __DIGRAPH_H__
-#define __DIGRAPH_H__
+#ifndef __MINIMUM_SPANNING_TREE_
+#define __MINIMUM_SPANNING_TREE_
 
-#include <igraph.h>
+#include <edge_weighted_graph.h>
 
+#include <functional>
+#include <queue>
 #include <vector>
 
 namespace Graph
 {
   //============================================================================
-  class Digraph : public virtual IGraph
+  class MinimumSpanningTree
   {
   private:
     //--------------------------------------------------------------------------
-    int                            _vertices;
-    int                            _edges;
+    const EdgeWeightedGraph    &_rG;
 
-    std::vector<container_t *>     _adjList;
-    
-    Digraph                       *_pReverseGraph;
+    std::queue<Edge>            _kruskalMST;
+    std::queue<Edge>            _primMST;
 
     //--------------------------------------------------------------------------
-    Digraph(const Digraph &);
-    Digraph & operator=(const Digraph &);
+    MinimumSpanningTree(const MinimumSpanningTree &);
+    MinimumSpanningTree & operator=(const MinimumSpanningTree &);
+
+    //--------------------------------------------------------------------------
+    void kruskalMST();
+
+    //--------------------------------------------------------------------------
+    void primMST();
+
+    //--------------------------------------------------------------------------
+    void visit(std::vector<bool> &rMarked, int v,
+	       std::priority_queue<Edge, std::vector<Edge>, std::greater<Edge> > &rPQ);
 
   public:
     //--------------------------------------------------------------------------
-    Digraph(int v = 0);
+    MinimumSpanningTree(const EdgeWeightedGraph &rG);
 
     //--------------------------------------------------------------------------
-    virtual ~Digraph();
+    ~MinimumSpanningTree();
 
     //--------------------------------------------------------------------------
-    virtual void addEdge(int v, int w);
+    const EdgeWeightedGraph & graph();
 
     //--------------------------------------------------------------------------
-    virtual const container_t & adjacent(int v) const;
+    const std::queue<Edge> & KruskalMST();
 
     //--------------------------------------------------------------------------
-    virtual int vertices() const;
+    const std::queue<Edge> & PrimMST();
 
-    //--------------------------------------------------------------------------
-    virtual int edges() const;
-
-    //--------------------------------------------------------------------------
-    virtual const IGraph & reverse() const;
-
-    //--------------------------------------------------------------------------
-    virtual std::string toString();
   };
 
 }

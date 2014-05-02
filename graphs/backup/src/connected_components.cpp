@@ -13,7 +13,7 @@ namespace Graph
         _marked    (rG.vertices(), false),
         _id        (rG.vertices(), numeric_limits<int>::max())
     {
-        for(int v = 0; v < rG.vertices(); ++v)
+        for(size_t v = 0; v < rG.vertices(); ++v)
         {
             if(!_marked[v])
             {

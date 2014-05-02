@@ -1,5 +1,5 @@
-#ifndef __DFS_H__
-#define __DFS_H__
+#ifndef __TOPOLOGICAL_SORT_H__
+#define __TOPOLOGICAL_SORT_H__
 
 #include <igraph.h>
 #include <ipaths.h>
@@ -9,35 +9,28 @@
 namespace Graph
 {
   //============================================================================
-  //In a graph G represented using the adjacency-lists representation, dfs
-  //marks all vertices connected to s in time proportional to the sum of the 
-  //degrees of each vertex in the connected component containing s.
-  //This is because each edge is visited twice and each vertex is visited once.
-  //Running time : O(E + V)
-  class DepthFirstPaths : public virtual IPaths
+  class TopologicalSort : public virtual IPaths
   {
   private:
     //--------------------------------------------------------------------------
-    int                  _s;
-
     std::vector<bool>    _marked;
-    std::vector<int>     _edgeTo;
+    std::stack<int>      _reversePost;
 
     //--------------------------------------------------------------------------
     void dfs(const IGraph &rG, int v);
 
     //--------------------------------------------------------------------------
-    DepthFirstPaths(const DepthFirstPaths &);
-    DepthFirstPaths & operator=(const DepthFirstPaths &);
+    TopologicalSort(const TopologicalSort &);
+    TopologicalSort & operator=(const TopologicalSort &);
 
   public:
     //--------------------------------------------------------------------------
-    DepthFirstPaths(const IGraph &rG, int s);
+    TopologicalSort(const IGraph &rG);
 
     //--------------------------------------------------------------------------
-    virtual ~DepthFirstPaths();
+    virtual ~TopologicalSort();
 
-    //--------------------------------------------------------------------------
+   //--------------------------------------------------------------------------
     virtual bool hasPathTo(int v);
 
     //--------------------------------------------------------------------------

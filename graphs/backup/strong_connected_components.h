@@ -1,45 +1,41 @@
-#ifndef __BFS_H__
-#define __BFS_H__
+#ifndef __STRONG_CONNECTED_COMPONENTS_H__
+#define __STRONG_CONNECTED_COMPONENTS_H__
 
-#include <igraph.h>
-#include <ipaths.h>
+#include <iconnected_components.h>
 
 #include <vector>
 
 namespace Graph
 {
   //============================================================================
-  //The shortest path between the source and any vertex in the connected set of 
-  //s is found using bfs. This is because vertices at a fixed length away from 
-  //s are all processed before the next set of vertices an additional level away.
-  class BreadthFirstPaths : public virtual IPaths
+  class StrongConnectedComponents : public virtual IConnectedComponents
   {
   private:
     //--------------------------------------------------------------------------
-    int                  _s;
+    int                  _count;
 
     std::vector<bool>    _marked;
-    std::vector<int>     _edgeTo;
+    std::vector<int>     _id;
 
     //--------------------------------------------------------------------------
-    void bfs(const IGraph &rG, int v);
+    virtual void dfs(const IGraph &rG, int v);
 
     //--------------------------------------------------------------------------
-    BreadthFirstPaths(const BreadthFirstPaths &);
-    BreadthFirstPaths & operator=(const BreadthFirstPaths &);
+    StrongConnectedComponents(const StrongConnectedComponents &);
+    StrongConnectedComponents & operator=(const StrongConnectedComponents &);
 
   public:
     //--------------------------------------------------------------------------
-    BreadthFirstPaths(const IGraph &rG, int s);
+    StrongConnectedComponents(const IGraph &rG, int s);
 
     //--------------------------------------------------------------------------
-    virtual ~BreadthFirstPaths();
+    virtual ~StrongConnectedComponents();
 
     //--------------------------------------------------------------------------
-    virtual bool hasPathTo(int v);
+    virtual int count() const;
 
     //--------------------------------------------------------------------------
-    virtual void pathTo(std::stack<int> &rPath, int v);
+    virtual int id(int v) const;
 
   };
 

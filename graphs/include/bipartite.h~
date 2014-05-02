@@ -27,6 +27,9 @@ namespace Graph
     void dfs(const IGraph &rG, int v);
 
     //--------------------------------------------------------------------------
+    bool isBipartite(const IGraph &rG, int v, bool color)
+
+    //--------------------------------------------------------------------------
     DepthFirstPaths(const DepthFirstPaths &);
     DepthFirstPaths & operator=(const DepthFirstPaths &);
 
@@ -42,6 +45,9 @@ namespace Graph
 
     //--------------------------------------------------------------------------
     virtual void pathTo(std::stack<int> &rPath, int v = 0);
+
+    //--------------------------------------------------------------------------
+    bool isBipartite(const IGraph &rG, int s = 0);
 
   };
 

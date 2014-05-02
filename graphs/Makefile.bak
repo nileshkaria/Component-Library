@@ -1,0 +1,31 @@
+CC = g++
+CFLAGS = -Wall -g -std=c++11
+SRC = src/bfs.cpp \
+	src/bipartite.cpp \
+	src/connected_components.cpp \
+	src/dfs.cpp \
+	src/digraph.cpp \
+	src/edge.cpp \
+	src/edge_weighted_graph.cpp \
+	src/graph.cpp \
+	src/strong_connected_components.cpp \
+	src/topological_sort.cpp
+INCLUDES = -I./include -I../dynamic_connectivity/include/
+LIBS = -L./../dynamic_connectivity -ldynamic_connectivity
+utilObjs = graph.o
+
+libgraph.a: $(utilObjs)
+	ar rc $@ $(utilObjs)
+	ranlib $@
+
+graph: graph.o libgraph.a
+	$(CC) $(CFLAGS) graph.o 
+
+graph.o: $(SRC) 
+	$(CC) $(CFLAGS) -c $< $(INCLUDES) $(LIBS) -o $@ 
+
+clean:
+	rm -rf *.o libgraph.a graph
+
+all: graph 
+.PHONY: all clean

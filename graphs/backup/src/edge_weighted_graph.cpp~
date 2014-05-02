@@ -1,4 +1,4 @@
-#include <graph.h>
+#include <digraph.h>
 
 #include <algorithm>
 
@@ -8,55 +8,47 @@ namespace Graph
 {
     //==========================================================================
     //--------------------------------------------------------------------------
-    Graph::Graph(int v) :
-        _vertices   (v),
-        _edges      (0),
-        _adjList    (v, new set<int>())
+    EdgeWeightedGraph::EdgeWeightedGraph(int v) :
+        _vertices        (v),
+        _edges           (0),
+        _adjList         (v, new set<int>())
     {}
 
     //--------------------------------------------------------------------------
-    Graph::~Graph()
+    EdgeWeightedGraph::~EdgeWeightedGraph()
     {
         for_each(_adjList.begin(), _adjList.end(), delete_element<set<int> *>());
     }
 
     //--------------------------------------------------------------------------
-    void Graph::addEdge(int v, int w)
+    void EdgeWeightedGraph::addEdge(int v, int w)
     { 
         _adjList[v]->insert(w);
-        _adjList[w]->insert(v);
 
-        ++_edges;    
+        ++_edges;
     }
 
     //--------------------------------------------------------------------------
-    const IGraph::container_t & Graph::adjacent(int v) const
+    const IGraph::container_t & EdgeWeightedGraph::adjacent(int v) const
     { 
         return *_adjList[v];
     }
 
     //--------------------------------------------------------------------------
-    int Graph::vertices() const
+    int EdgeWeightedGraph::vertices() const
     { 
         return _vertices;        
     }
 
     //--------------------------------------------------------------------------
-    int Graph::edges() const
+    int EdgeWeightedGraph::edges() const
     { 
         return _edges;
     }
 
     //--------------------------------------------------------------------------
-    const IGraph & Graph::reverse() const
+    std::string EdgeWeightedGraph::toString()
     { 
-        return *this;        
-    }
-
-    //--------------------------------------------------------------------------
-    std::string Graph::toString()
-    { 
-        return "";
     }
 
 }

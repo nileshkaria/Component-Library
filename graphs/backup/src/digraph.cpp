@@ -11,14 +11,14 @@ namespace Graph
     Digraph::Digraph(int v) :
         _vertices        (v),
         _edges           (0),
-        _adjList         (v, new container_t()),
+        _adjList         (v, new set<int>()),
         _pReverseGraph   (0)
     {}
 
     //--------------------------------------------------------------------------
     Digraph::~Digraph()
     {
-        for_each(_adjList.begin(), _adjList.end(), delete_element<container_t *>());
+        for_each(_adjList.begin(), _adjList.end(), delete_element<set<int> *>());
         
         if(_pReverseGraph)
         {
@@ -68,9 +68,9 @@ namespace Graph
             
             pTemp = new Digraph(_vertices);
             
-            for(int v = 0; v < _vertices; ++v)
+            for(size_t v = 0; v < _vertices; ++v)
             {
-                for(iterator it = _adjList[v]->begin(); it != _adjList[v]->end(); ++it)
+                for(set<int>::iterator it = _adjList[v]->begin(); it != _adjList[v]->end(); ++it)
                     pTemp->addEdge(*it, v);
             }
         }
@@ -81,7 +81,6 @@ namespace Graph
     //--------------------------------------------------------------------------
     std::string Digraph::toString()
     { 
-        return "";
     }
 
 }

@@ -1,5 +1,5 @@
-#ifndef __DIGRAPH_H__
-#define __DIGRAPH_H__
+#ifndef __EDGE_WEIGHTED_GRAPH_H__
+#define __EDGE_WEIGHTED_GRAPH_H__
 
 #include <igraph.h>
 
@@ -8,30 +8,31 @@
 namespace Graph
 {
   //============================================================================
-  class Digraph : public virtual IGraph
+  class EdgeWeightedGraph : public virtual IGraph
   {
   private:
     //--------------------------------------------------------------------------
-    int                            _vertices;
-    int                            _edges;
+    int                              _vertices;
+    int                              _edges;
 
-    std::vector<container_t *>     _adjList;
+    std::vector<std::set<int> *>     _adjList;
     
-    Digraph                       *_pReverseGraph;
-
     //--------------------------------------------------------------------------
-    Digraph(const Digraph &);
-    Digraph & operator=(const Digraph &);
-
-  public:
-    //--------------------------------------------------------------------------
-    Digraph(int v = 0);
-
-    //--------------------------------------------------------------------------
-    virtual ~Digraph();
+    EdgeWeightedGraph(const EdgeWeightedGraph &);
+    EdgeWeightedGraph & operator=(const EdgeWeightedGraph &);
 
     //--------------------------------------------------------------------------
     virtual void addEdge(int v, int w);
+
+  public:
+    //--------------------------------------------------------------------------
+    EdgeWeightedGraph(int v = 0);
+
+    //--------------------------------------------------------------------------
+    virtual ~EdgeWeightedGraph();
+
+    //--------------------------------------------------------------------------
+    virtual void addEdge(const Edge &e);
 
     //--------------------------------------------------------------------------
     virtual const container_t & adjacent(int v) const;

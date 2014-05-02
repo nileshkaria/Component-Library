@@ -1,4 +1,4 @@
-#include <connected_components.h>
+#include <bipartite.h>
 
 #include <limits>
 
@@ -8,52 +8,45 @@ namespace Graph
 {
     //==========================================================================
     //--------------------------------------------------------------------------
-    ConnectedComponents::ConnectedComponents(const IGraph &rG, int s) :
-        _count     (0),
+    Bipartite::Bipartite(const IGraph &rG) :
+        _bipartite (false),
         _marked    (rG.vertices(), false),
-        _id        (rG.vertices(), numeric_limits<int>::max())
+        _color     (rG.vertices(), false)
     {
-        for(int v = 0; v < rG.vertices(); ++v)
-        {
-            if(!_marked[v])
-            {
-                dfs(rG, v);
-                ++_count;
-            }
-        }        
+        _bipartite = isBipartite(rG, 0, true);
     }
 
     //--------------------------------------------------------------------------
-    ConnectedComponents::~ConnectedComponents()
+    Bipartite::~Bipartite()
     {}
 
     //--------------------------------------------------------------------------
-    void ConnectedComponents::dfs(const IGraph &rG, int v)
+    bool Bipartite::isBipartite(const IGraph &rG, int v, bool c)
     {
         _marked[v] = true;
-        _id[v]     = _count;
+        _color[v]  = c;
         
         const IGraph::container_t & rAdjList = rG.adjacent(v);
         
         for(IGraph::const_iterator it = rAdjList.begin(); it != rAdjList.end(); ++it)
         {
             if(!_marked[*it])
-                dfs(rG, *it);
+                return isBipartite(rG, *it, !c);
+            else
+            {
+                //Previously visited, adjacent vertex of same color
+                if(_color[v] == _color[*it])
+                    return false;
+            }
         }
-        
+
+        return true;
     }
 
     //--------------------------------------------------------------------------
-    int ConnectedComponents::count() const
+    bool Bipartite::isBipartite()
     {
-        return _count;
+        return _bipartite;
     }
     
-
-    //--------------------------------------------------------------------------
-    int ConnectedComponents::id(int v) const
-    {
-        return _id[v];
-    }
-
 }

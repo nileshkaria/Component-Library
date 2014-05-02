@@ -1,50 +1,52 @@
-#ifndef __GRAPH_H__
-#define __GRAPH_H__
+#ifndef __EDGE_H__
+#define __EDGE_H__
 
-#include <igraph.h>
-
-#include <vector>
+#include <set>
+#include <string>
 
 namespace Graph
 {
   //============================================================================
-  class Graph : public virtual IGraph
+  //----------------------------------------------------------------------------
+  template <typename T>
+    struct delete_element
+    {
+      void operator()(T t) const
+      {
+        delete t;
+      }
+    };
+
+  //============================================================================
+  class Edge
   {
   private:
     //--------------------------------------------------------------------------
-    int                           _vertices;
-    int                           _edges;
-
-    std::vector<container_t *>    _adjList;
-
-    //--------------------------------------------------------------------------
-    Graph(const Graph &);
-    Graph & operator=(const Graph &);
+    int       _v;
+    int       _w;
+    double    _weight;
 
   public:
     //--------------------------------------------------------------------------
-    Graph(int v = 0);
+    Edge(int v, int w, double weight);
 
     //--------------------------------------------------------------------------
-    virtual ~Graph();
+    ~Edge();
 
     //--------------------------------------------------------------------------
-    virtual void addEdge(int v, int w);
+    int either();
 
     //--------------------------------------------------------------------------
-    virtual const container_t & adjacent(int v) const;
+    int other(int v);
 
     //--------------------------------------------------------------------------
-    virtual int vertices() const;
+    double weight();
 
     //--------------------------------------------------------------------------
-    virtual int edges() const;
+    bool operator<(const Edge &lhs, const Edge &rhs) const;
 
     //--------------------------------------------------------------------------
-    virtual const IGraph & reverse() const;
-
-    //--------------------------------------------------------------------------
-    virtual std::string toString();
+    std::string toString() = 0;
   };
 
 }

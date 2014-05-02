@@ -12,12 +12,12 @@ namespace Graph
   {
   private:
     //--------------------------------------------------------------------------
-    int                            _vertices;
-    int                            _edges;
+    int                              _vertices;
+    int                              _edges;
 
-    std::vector<container_t *>     _adjList;
+    std::vector<std::set<int> *>     _adjList;
     
-    Digraph                       *_pReverseGraph;
+    Digraph                         *_pReverseGraph;
 
     //--------------------------------------------------------------------------
     Digraph(const Digraph &);
